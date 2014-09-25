@@ -18,3 +18,6 @@ with serial.Serial(addr,baud) as pt, open(fname,fmode) as outf:
         print (x,end='')    # echo line of text on-screen
         outf.write(x)       # write line of text to file
         outf.flush()        # make sure it actually gets written out
+
+
+#ezt megvaltoztatom
