@@ -21,15 +21,16 @@ with serial.Serial(addr,baud) as pt:
     
     while (1):
         with open(str(fname),fmode) as outf:
+            if x.find(fend)!=-1:
+                flag=1
+            if x.find(fstart)!=-1 and flag==1:
+                fname=fname+1
+                flag=0
             x = spb.readline()  # read one line of text from serial port
             print (x,end='')    # echo line of text on-screen
             outf.write("["+str(datetime.datetime.utcnow())+"]"+x)       # write line of text to file
             outf.flush()        # make sure it actually gets written out
-        if x.find(fend)!=-1:
-            flag=1
-        if x.find(fstart)!=-1 and flag==1:
-            fname=fname+1
-            flag=0
+
         else:
             pass
 
