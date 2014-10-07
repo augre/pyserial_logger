@@ -1,25 +1,23 @@
+import datetime
 import wx
 
-class MainWindow(wx.Frame):
-    def __init__(self, parent, title):
-        wx.Frame.__init__(self, parent, title=title, size=(200,100))
-        self.control = wx.TextCtrl(self, style=wx.TE_MULTILINE)
-        self.CreateStatusBar() # A Statusbar in the bottom of the window
+print datetime.datetime.utcnow()
 
-        # Setting up the menu.
-        filemenu= wx.Menu()
+class App(wx.App):
 
-        # wx.ID_ABOUT and wx.ID_EXIT are standard IDs provided by wxWidgets.
-        filemenu.Append(wx.ID_ABOUT, "&About"," Information about this program")
-        filemenu.AppendSeparator()
-        filemenu.Append(wx.ID_EXIT,"E&xit"," Terminate the program")
+    def OnInit(self):
+        frame=wx.Frame(parent=None, title='Bare')
+        frame.Show(False)
+        while(str(datetime.datetime.utcnow()).find("21:26:")!=-1):
+            print "in the loop"
+            print datetime.datetime.utcnow()
+            frame.Show()
 
-        # Creating the menubar.
-        menuBar = wx.MenuBar()
-        menuBar.Append(filemenu, "&File")
-        self.SetMenuBar(menuBar)
-        self.Show(True)
+        print "out of the loop"
+        print datetime.datetime.utcnow()
+        frame.Show(False)
+        return True
 
-app=wx.App(False)
-frame=MainWindow(None, "Sample editor")
+app=App()
 app.MainLoop()
+
