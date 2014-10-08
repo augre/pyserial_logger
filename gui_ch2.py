@@ -16,7 +16,7 @@ class Frame(wx.Frame):
 
 
 class App(wx.App):
-    def __init__(self, redirect=True, filename=None):
+    def __init__(self, redirect, filename=None):
         print "App __init__"
         wx.App.__init__(self, redirect, filename)
 
@@ -36,3 +36,6 @@ if __name__=="__main__":
     print "before MainLoop"
     app.MainLoop()
     print "After MainLoop"
+
+
+##Gondolom ez akkor lehet hasznos ha peldaul mar exe van belole es nincsen tobbe konzol.
