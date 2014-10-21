@@ -6,7 +6,7 @@
 ##to a separate wxPython frame. Text sent to the streams before the wxPython application
 ##begins or after it ends is, of course, processed normally.
 
-
+##
 ##If the redirect parameter is True, then the second parameter, filename,
 ##can also be set. If so, output is redirected to a file with that name, rather than to
 ##the wxPython frame.
@@ -18,6 +18,7 @@
 
 import wx
 import sys
+import images
 
 class Frame(wx.Frame):
     def __init__(self,parent, id, title):
@@ -27,13 +28,27 @@ class Frame(wx.Frame):
 
         #added close button
         panel=wx.Panel(self)
+        statusBar=self.CreateStatusBar()
+        toolBar=self.CreateToolBar()
+        toolBar.AddSimpleTool(wx.NewId(), images.getNewBitmap(), "New", "Long helo for 'New'")
+        toolBar.Realize()
+        menuBar=wx.MenuBar()
+        menu1=wx.Menu()
+        menuBar.Append(menu1, "File")
+        menu2=wx.Menu()
+        menu2.Append(wx.NewId(), "Copy", "copy in the status bar")
+        menu2.Append(wx.NewId(), "Cut", "cut")
+        menu2.AppendSeparator()
+        menu2.Append(wx.NewId(), "Options...", "Display Options")
+        menuBar.Append(menu2, "E&dit")
+        self.SetMenuBar(menuBar)
+        
         button=wx.Button(panel, label="close", pos=(125,10), size=(50,50))
         self.Bind(wx.EVT_BUTTON, self.OnCloseMe, button)
-        #self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
+        self.Bind(wx.EVT_CLOSE, self.OnCloseWindow)
 
     def OnCloseMe(self, event):
         self.Close(True)
-        
 
     def OnCloseWindow(self, event):
         self.Destroy()
@@ -45,7 +60,7 @@ class App(wx.App):
         wx.App.__init__(self, redirect, filename)
         #application to continue after the last window
         #closes
-        #self.SetExitOnFrameDelete(False)
+##        self.SetExitOnFrameDelete(False)
         
 
     def OnInit(self):
