@@ -17,14 +17,14 @@ import sys
 
 addr  = 8  # serial port to read data from
 baud  = 115200            # baud rate for serial port
-location =os.path.normpath("C:/Z3/customers/ADLINK_Sonosite/Logs/30002201142310")
+location =os.path.normpath("C:/Z3/customers/KSI/2014-10-30/Box_2/Top_layer/30000102144210")
 
-fname = 1   # log file to save data in, serial number
+fname = 348   # log file to save data in, serial number
 fmode = 'a'             # log file mode = append
 flag=0
-fstart="Update Image Detected"
-fend="Preloading gstreamer components"
-testEnd="="
+fstart="DDR OK"
+fend="TEST PASS"
+
 
 
 
@@ -42,7 +42,7 @@ with serial.Serial(addr,baud) as pt:
 
             
         elif x.find(fstart)!=-1 and flag==1:
-            fname=fname+1
+            fname=fname-1
             flag=0
 			
 			
