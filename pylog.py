@@ -17,16 +17,19 @@ import sys
 
 addr  = 8  # serial port to read data from
 baud  = 115200            # baud rate for serial port
-location =os.path.normpath("C:/Z3/customers/KSI/2014-10-30/Box_2/Top_layer/30000102144210")
+location =os.path.normpath("C:/Z3/customers/KSI/2014-10-30/Box_2/Bottom_layer/30000102144210")
 
-fname = 348   # log file to save data in, serial number
+fname = 245   # log file to save data in, serial number
 fmode = 'a'             # log file mode = append
 flag=0
 fstart="DDR OK"
 fend="TEST PASS"
+testFail="TEST FAIL" # have to add a case when test fails clear flag and
+                     # print warning
 
-
-
+##
+## TO DO: add mac address check for session, as whole to avoid double check for
+                     ##module
 
 
 with serial.Serial(addr,baud) as pt:
@@ -44,6 +47,7 @@ with serial.Serial(addr,baud) as pt:
         elif x.find(fstart)!=-1 and flag==1:
             fname=fname-1
             flag=0
+            outf.close() #close the previous file
 			
 			
         with open((location+str(fname)+".log"),fmode) as outf:
