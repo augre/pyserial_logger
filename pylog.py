@@ -15,9 +15,9 @@ import sys
 
 
 
-addr  = 8  # serial port to read data from
+addr  = '/dev/ttyUSB0'  # serial port to read data from
 baud  = 115200            # baud rate for serial port
-location =os.path.normpath("C:/Z3/customers/KSI/2014-10-30/Box_2/Bottom_layer/30000102144210")
+location =os.path.normpath("/home/z3/Z3/Customers/KSI/Box_3/Top_layer")
 
 fname = 245   # log file to save data in, serial number
 fmode = 'a'             # log file mode = append
@@ -30,6 +30,9 @@ testFail="TEST FAIL" # have to add a case when test fails clear flag and
 ##
 ## TO DO: add mac address check for session, as whole to avoid double check for
                      ##module
+##Also, when the serial number is decreased from 100 to 99 a zero 099 is cut off.
+##Have to pay special attention to this.
+##If serial number is increased there will be a digit added when going from 99 to 100
 
 
 with serial.Serial(addr,baud) as pt:
