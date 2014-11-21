@@ -15,16 +15,16 @@ import sys
 
 
 
-addr  = 8  # serial port to read data from
+addr  = '/dev/ttyUSB0'  # serial port to read data from
 baud  = 115200            # baud rate for serial port
-location =os.path.normpath("C:/Z3/customers/ADLINK_Sonosite/Logs/30002201142310")
+location =os.path.normpath("/home/z3/Z3/Customers/Carmanah/0365M05144610")
 
-fname = 1   # log file to save data in, serial number
+fname = 248   # log file to save data in, serial number
 fmode = 'a'             # log file mode = append
 flag=0
-fstart="Update Image Detected"
-fend="Preloading gstreamer components"
-testEnd="="
+fstart="PSP 2.10.00.08 v0.1"
+fend="# davi"
+
 
 
 
@@ -38,11 +38,11 @@ with serial.Serial(addr,baud) as pt:
         if x.find(fend)!=-1:
             flag=1
             print('\n\nFlag Set\n\n', file=sys.stderr)
-            pt.write('\n')
+            pt.write('\r')
 
             
         elif x.find(fstart)!=-1 and flag==1:
-            fname=fname+1
+            fname=fname-1
             flag=0
 			
 			
