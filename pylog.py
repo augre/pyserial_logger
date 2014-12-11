@@ -64,12 +64,12 @@ with serial.Serial(addr,baud) as pt:
             pt.write(com1)
             com1Flag=1
             
-        if x.find(com1Success)!=-1 and com1Flag==1:
+        if x.find(com1Success)!=-1 and com1Flag==1 and com2Flag==0:
             print('\n\ncom1SuccessFlag\n\n', file=sys.stderr)
             com1SuccessFlag=1
             pt.write('\n')
             
-        if x.find(promt)!=-1 and com1Flag==1 and com1SuccessFlag==1:
+        if x.find(promt)!=-1 and com1Flag==1 and com1SuccessFlag==1 and updateFlag==0:
             print('\n\nPROMT com2\n\n', file=sys.stderr)
             pt.write(com2)
             com2Flag=1
