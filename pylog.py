@@ -17,15 +17,26 @@ import sys
 
 addr  = 8  # serial port to read data from
 baud  = 115200            # baud rate for serial port
-location =os.path.normpath("C:/Z3/customers/KSI/2014-10-30/Box_2/Bottom_layer/30000102144210")
+location =os.path.normpath("C:/Z3/customers/Marubun_Toshiba/300002101144910")
 
-fname = 245   # log file to save data in, serial number
+fname = 242   # log file to save data in, serial number
 fmode = 'a'             # log file mode = append
 flag=0
-fstart="DDR OK"
+fstart="DM385-GP rev 1.0"
 fend="TEST PASS"
 testFail="TEST FAIL" # have to add a case when test fails clear flag and
                      # print warning
+stopBoot="factory jumper detected"
+promt="Z3-DM385"
+com1="run update-env\n"
+com1Flag=0
+com1Success="Writing to Nand... done"
+com1SuccessFlag=0
+com2="run update-ubifs-all\n"
+com2Flag=0
+updateSuccess="*** UPDATE SUCCESS ****"
+updateFlag=0
+
 
 ##
 ## TO DO: add mac address check for session, as whole to avoid double check for
@@ -43,14 +54,41 @@ with serial.Serial(addr,baud) as pt:
             print('\n\nFlag Set\n\n', file=sys.stderr)
             pt.write('\n')
 
+        elif x.find(stopBoot)!=-1 and updateFlag==0:
+            print('\n\nSTOP BOOT\n\n', file=sys.stderr)
+            pt.write('S')
+            pt.write('\n')
+            
+        if x.find(promt)!=-1 and com1Flag==0:
+            print('\n\nPROMT com1\n\n', file=sys.stderr)
+            pt.write(com1)
+            com1Flag=1
+            
+        if x.find(com1Success)!=-1 and com1Flag==1:
+            print('\n\ncom1SuccessFlag\n\n', file=sys.stderr)
+            com1SuccessFlag=1
+            pt.write('\n')
+            
+        if x.find(promt)!=-1 and com1Flag==1 and com1SuccessFlag==1:
+            print('\n\nPROMT com2\n\n', file=sys.stderr)
+            pt.write(com2)
+            com2Flag=1
+
+        if x.find(updateSuccess)!=-1 and com2Flag==1:
+            updateFlag=1
+            
             
         elif x.find(fstart)!=-1 and flag==1:
             fname=fname-1
             flag=0
+            com1Flag=0
+            com2Flag=0
+            updateFlag=0
             outf.close() #close the previous file
 			
 			
         with open((location+str(fname)+".log"),fmode) as outf:
+            print('=', file=sys.stderr)
             if x.find(fstart)!=-1:
                 ts = time.time()
                 outf.write("\n\n\n["+datetime.datetime.fromtimestamp(ts).strftime('%Y-%m-%d %H:%M:%S')+"]\n\n\n")  # timestamp at the beginning of the file 
