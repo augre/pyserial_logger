@@ -19,7 +19,7 @@ addr  = 8  # serial port to read data from
 baud  = 115200            # baud rate for serial port
 location =os.path.normpath("C:/Z3/customers/Marubun_Toshiba/300002101144910")
 
-fname = 242   # log file to save data in, serial number
+fname = 233   # log file to save data in, serial number
 fmode = 'a'             # log file mode = append
 flag=0
 fstart="DM385-GP rev 1.0"
@@ -84,6 +84,7 @@ with serial.Serial(addr,baud) as pt:
             com1Flag=0
             com2Flag=0
             updateFlag=0
+            com1SuccessFlag=0
             outf.close() #close the previous file
 			
 			
