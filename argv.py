@@ -34,14 +34,34 @@ class Config:
          elif opt in ("-p", "--port"):
             self.port = arg
          elif opt in ("-l", "--location"):
-            self.location = location+arg
+            self.location = self.location+arg
          elif opt in ("-f", "--name"):
             self.name = arg
-      print 'baud is: ', self.baudrate
-      print 'port is: ', self.port
-      print 'location is: ', self.location
-      print 'name is: ', self.name
-
+##      print 'baud is: ', self.baudrate
+##      print 'port is: ', self.port
+##      print 'location is: ', self.location
+##      print 'name is: ', self.name
+   def writeConfig(self):
+      f=open('config', 'w')
+      f.write("baudrate %s\nport %s\nlocation %s\nname %s" % (str(self.baudrate), str(self.port), self.location, str(self.name)))
+      f.closed
+   def readConfig(self):
+      with open('config', 'r') as f:
+         opts=f.read()
+         opts=opts.split("\n")
+         for opt in opts:
+            if opt.split()[0]=='baudrate':
+               self.baudrate=opt.split()[1]
+               print(self.baudrate)
+            elif opt.split()[0]=='port':
+               self.port=opt.split()[1]
+               print(self.port)
+            elif opt.split()[0]=='location':
+               self.location=opt.split()[1]
+               print(self.location)
+            elif opt.split()[0]=='name':
+               self.name=opt.split()[1]
+               print(self.name)
 if __name__ == "__main__":
     a=Config()
     a.cmdInputs()

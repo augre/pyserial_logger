@@ -12,15 +12,26 @@ import time
 import datetime
 import os
 import sys
+import argv
+
+config=argv.Config()
+config.cmdInputs()
+##config.writeConfig()
+config.readConfig()
 
 
 
-addr  = 8  # serial port to read data from
-baud  = 115200            # baud rate for serial port
-location =os.path.normpath("C:/Z3/customers/Marubun_Toshiba/300002101144910")
 
-fname = 233   # log file to save data in, serial number
-fmode = 'a'             # log file mode = append
+
+addr  = config.port  # serial port to read data from
+baud  = config.baudrate            # baud rate for serial port
+location =os.path.normpath(config.location)
+
+fname = config.name   # log file to save data in, serial number
+fmode = config.mode             # log file mode = append
+
+print(addr, baud, location, fname, fmode)
+
 flag=0
 fstart="DM385-GP rev 1.0"
 fend="TEST PASS"
