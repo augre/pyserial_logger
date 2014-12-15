@@ -23,11 +23,11 @@ config.readConfig()
 
 
 
-addr  = config.port  # serial port to read data from
-baud  = config.baudrate            # baud rate for serial port
+addr  = int(config.port)  # serial port to read data from
+baud  = int(config.baudrate)            # baud rate for serial port
 location =os.path.normpath(config.location)
 
-fname = config.name   # log file to save data in, serial number
+fname = int(config.name)   # log file to save data in, serial number
 fmode = config.mode             # log file mode = append
 
 print(addr, baud, location, fname, fmode)
