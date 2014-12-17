@@ -99,7 +99,7 @@ with serial.Serial(addr,baud) as pt:
             outf.close() #close the previous file
 			
 			
-        with open((location+str(fname)+".log"),fmode) as outf:
+        with open((location+str(fname).zfill(3)+".log"),fmode) as outf:
             print('=', file=sys.stderr)
             if x.find(fstart)!=-1:
                 ts = time.time()
